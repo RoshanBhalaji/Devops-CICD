@@ -13,9 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint-and-test:
+  lint-and-audit:
     runs-on: ubuntu-latest
-    environment: dev
 
     steps:
       - name: Checkout repository
@@ -36,8 +35,35 @@ jobs:
       - name: Security Check (Dependency Audit)
         run: npm run audit
 
+  test:
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: lint-and-audit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Run Tests
         run: npm test
+
+  report:
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: [lint-and-audit, test]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Generate Sample Report
         run: |
