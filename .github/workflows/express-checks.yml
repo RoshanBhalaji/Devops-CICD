@@ -77,6 +77,15 @@ jobs:
           name: sample-build-report
           path: build-report.txt
 
+      - name: Log GitHub Context Details
+        run: |
+          echo "Triggered by Actor: ${{ github.actor }}"
+          echo "Repository Name: ${{ github.repository }}"
+          echo "Triggering Event: ${{ github.event_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Branch/Ref: ${{ github.ref }}"
+          echo "Runner OS: ${{ runner.os }}"
+
       - name: Pipeline Status
         run: |
           echo "CI Pipeline checks completed successfully!"
