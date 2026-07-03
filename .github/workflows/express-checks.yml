@@ -1,5 +1,9 @@
 name: Express CI Pipeline
 
+env:
+  APP_ENV: production
+  PORT: 3000
+
 on:
   push:
     branches: [ "main" ]
@@ -34,4 +38,7 @@ jobs:
         run: npm test
 
       - name: Pipeline Status
-        run: echo "CI Pipeline checks completed successfully!"
+        run: |
+          echo "CI Pipeline checks completed successfully!"
+          echo "Running in environment: ${{ env.APP_ENV }}"
+          echo "Configured Port: ${{ env.PORT }}"
