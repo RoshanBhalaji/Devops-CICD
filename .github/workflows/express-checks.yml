@@ -3,6 +3,7 @@ name: Express CI Pipeline
 env:
   APP_ENV: production
   PORT: 3000
+  DATABASE_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 on:
   push:
@@ -42,3 +43,4 @@ jobs:
           echo "CI Pipeline checks completed successfully!"
           echo "Running in environment: ${{ env.APP_ENV }}"
           echo "Configured Port: ${{ env.PORT }}"
+          echo "Database Password: ${{ env.DATABASE_PASSWORD }}"
